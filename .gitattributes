@@ -1,0 +1,13 @@
+# -----------------------------------------------
+# ----  GitAttributes  --------------------------
+# ----  https://git-scm.com/docs/gitattributes  -
+# -----------------------------------------------
+
+# For templates, see
+# https://github.com/alexkaratarakis/gitattributes
+
+*        text=auto
+
+*.sh     text    diff=bash
+*.adoc   text    diff=asciidoc
+*.rs     test    diff=rust

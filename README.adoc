@@ -1,0 +1,72 @@
+= A Next-Generation Supervisor Process
+v0.1.0
+:doctype: article
+:toc: preamble
+:toclevels: 3
+:imagesdir: assets/images
+:glossary-term-color: #2B53A7
+
+// cSpell: locale en
+// cSpell: enableCompoundWords
+// cSpell: ignore COMPUTER
+
+
+image::computer.svg[COMPUTER,float="right",align="center"]
+
+_COMPUTER_ is a <<supervisor>> <<daemon>> for <<Linux>>, written entirely in <<Rust>>(TM), that conforms to <<UNIX>> philosophy the of doing one thing and doing it well <<unix::philosophy>>.
+
+[WARNING]
+.In Development
+====
+This software is currently in development and should not be used in a production environment.
+====
+
+== About
+
+_COMPUTER_ supervises other processes, possibly as an init system (process with <<PID>> 1). Its main goals are:
+
+. *stability*: the program is robust and reliable
+. *simplicity*: the code is easy to understand, the program is easy to use
+. *performance*: the program is efficient and fast
+. *integrity*: the code is well-documented, linted, tested, as well as easy to navigate and comprehend
+. *fun*: often overlooked, it should be seamless and fun to write code and to use the program
+
+_COMPUTER_ uses <<YAML>> configuration files to fully define the processes it supervises. The code aims to be simple in structure and easy to comprehend. Hence, you should be able to effortlessly navigate it to find out more about this project.
+
+[glossary]
+== Terminology
+
+[glossary]
+[[daemon]]daemon::
+    a service process that runs in the background and supervises the system or provides functionality to other processes. https://man7.org/linux/man-pages/man7/daemon.7.html
+
+[[init_system,init system]]init system::
+    (typically the) first process started during booting of the operating system; a <<daemon>> process that continues running until the system is shut down; supervises other processes. https://en.wikipedia.org/wiki/Init
+
+[[Linux,_Linux_]]Linux::
+    a family of open-source Unix-like operating systems based on the https://en.wikipedia.org/wiki/Linux_kernel[Linux kernel]. https://www.linux.org/
+
+[[Rust]]Rust::
+    the Rust programming language; a language empowering everyone to build reliable and efficient software. https://www.rust-lang.org/
+
+[[supervisor]]supervisor::
+    a process that manages other processes, typically by starting, stopping, and restarting them as needed. https://en.wikipedia.org/wiki/Supervisory_program
+
+[[UNIX]]UNIX::
+    a family of multitasking, multiuser computer operating systems that derive from the original AT&T Unix, developed in the 1970s at the Bell Labs research center by _Ken Thompson_, _Dennis Ritchie_, and others. https://en.wikipedia.org/wiki/Unix
+
+== Acronyms
+
+[[PID]]PID:: process identifier. https://en.wikipedia.org/wiki/Process_identifier
+
+[[YAML]]YAML:: a human-readable data serialization language; <<YAML>> Ain't Markup Language. https://en.wikipedia.org/wiki/YAML
+
+[bibliography]
+== References
+
+[bibliography]
+- [[[unix::philosophy,1]]] Doug McIlroy; E. N. Pinson; B. A. Tague (8 July 1978). "Unix Time-Sharing System: Foreword". The Bell System Technical Journal. Bell Laboratories: 1902-1903 (Style).
+
+== Etymology
+
+The name _COMPUTER_ is a reference to the https://memory-alpha.fandom.com/wiki/Computer[computer of _Star Trek - The Next Generation_]. _COMPUTER_ draws its inspiration from the computer of the https://en.wikipedia.org/wiki/USS_Enterprise_(NCC-1701-D)[USS Enterprise (NCC-1701-D)], a central system that manages the ship's operations. Especially the seamlessness with which the crew interacts with the computer and the organizational structure of the ship is important. Hence, you will encounter more references to _Star Trek: TNG_ in this project. Engage!
