@@ -1,8 +1,9 @@
 {
 	"name": "development",
-	"image": "ghcr.io/georglauterbach/dev-container-base:5.1.0",
+	"image": "ghcr.io/georglauterbach/dev-container-base:5.4.0",
 	"features": {
-		"ghcr.io/georglauterbach/dev-container-features/rust:5.6.1": {
+		"ghcr.io/georglauterbach/dev-container-features/rust:5.8.3": {
+      "rust.rustup.default-toolchain-file": "code/rust-toolchain.toml",
 			"system.packages.additional-packages": "pkg-config,musl-tools",
 			"linker.mold.install": "true"
 		}
@@ -16,24 +17,13 @@
 		"CARGO_HOME": "${containerWorkspaceFolder}/code/.rust/cargo/home",
 		"RUSTUP_HOME": "${containerWorkspaceFolder}/code/.rust/rustup",
 		"CARGO_TARGET_AARCH64_UNKNOWN_LINUX_MUSL_LINKER": "aarch64-linux-gnu-gcc",
-		"CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER": "x86_64-linux-musl-gcc",
-		// Hermes
-		"HERMES_INIT_BAT": "true",
-		"HERMES_INIT_FZF": "true",
-		"HERMES_INIT_STARSHIP": "true",
-		"HERMES_INIT_ZOXIDE": "true",
-		"HERMES_OVERRIDE_CAT_WITH_BAT": "true",
-		"HERMES_OVERRIDE_CD_WITH_ZOXIDE": "true",
-		"HERMES_OVERRIDE_LS_WITH_EZA": "true",
-		"HERMES_CONFIG_ATUIN_DB_FILE": "/home/ubuntu/.cache/atuin_history.db",
-		"HERMES_CONFIG_ATUIN_WITH_HISTFILE": "/home/ubuntu/.cache/atuin_history.txt",
-		"HERMES_CONFIG_ATUIN_DISABLE_UP_ARROW": "true"
+		"CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER": "x86_64-linux-musl-gcc"
 	},
 	"remoteEnv": {
 		"PATH": "${containerEnv:CARGO_HOME}/bin:${containerEnv:PATH}"
 	},
 	"initializeCommand": "mkdir -p \"${HOME}/.gnupg\" \"${HOME}/.ssh\"",
-	"postStartCommand": "if [ -f \"${REPOSITORY_ROOT_DIR}/.vscode/post_start_command.sh\" ]; then \"${REPOSITORY_ROOT_DIR}/.vscode/post_start_command.sh\"; else :; fi",
+	"postStartCommand": "if [ -f \"${REPOSITORY_ROOT_DIR}/.vscode/post_start_command.sh\" ]; then bash \"${REPOSITORY_ROOT_DIR}/.vscode/post_start_command.sh\"; else :; fi",
 	"mounts": [
 		{
 			// We bind the GPG directory because signing seems to be
@@ -61,7 +51,10 @@
 			"extensions": [
 				"aaron-bond.better-comments",
 				"asciidoctor.asciidoctor-vscode",
-				"redhat.vscode-yaml"
+        "bierner.github-markdown-preview",
+				"redhat.vscode-yaml",
+        "streetsidesoftware.code-spell-checker",
+        "yzhang.markdown-all-in-one"
 			],
 			"settings": {
 				// * basics

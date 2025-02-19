@@ -1,0 +1,21 @@
+meta:
+  version: 0.1.0
+
+type: temporary | permanent
+
+program:
+  name: <NAME>
+  arguments: [ <ARGUMENTS> ]
+
+  shutdown_command: <SHUTDOWN COMMAND>
+
+  environment:
+    - name: <ENVIRONMENT VARIABLE NAME>
+      value: <ENVIRONMENT VARIABLE VALUE>
+
+diagnosis:
+  level5:
+  level4:
+  level3:
+  level2:
+  level1:

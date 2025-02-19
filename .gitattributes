@@ -9,5 +9,5 @@
 *        text=auto
 
 *.sh     text    diff=bash
-*.adoc   text    diff=asciidoc
+*.md     text    diff=markdown
 *.rs     test    diff=rust
