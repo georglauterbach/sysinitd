@@ -1,0 +1,50 @@
+---
+name: Bug Report
+description: Submit a bug report to help us improve
+title: 'bug report: '
+labels:
+  - kind/bug/report
+  - issue/needs triage
+
+body:
+  - type: checkboxes
+    id: preliminary-checks
+    attributes:
+      label: 📝 Preliminary Checks
+      options:
+        - label: I searched for existing issues but still need assistance.
+          required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 👀 What Happened?
+      description: And how did this differ from your expectations?
+    validations:
+      required: true
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: 👟 Reproduction Steps
+      description: How did you trigger this bug? Please walk us through it step by step.
+  - type: input
+    id: version
+    attributes:
+      label: 📊 initd Version
+      description: On which version did you encounter this bug?
+    validations:
+      required: true
+  - type: input
+    id: architecture
+    attributes:
+      label: 💻 Processor Architecture
+      options:
+        - amd64
+        - ard64
+    validations:
+      required: true
+  - type: textarea
+    id: relevant-log-output
+    attributes:
+      label: 📜 Relevant log output
+      description: Show us relevant log output here
+      render: text

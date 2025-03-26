@@ -1,0 +1,19 @@
+---
+name: Testing
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [src/**, Cargo.toml]
+    tags: ['*.*.*']
+
+permissions:
+  contents: read
+
+jobs:
+  unittest:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
