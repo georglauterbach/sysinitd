@@ -1,58 +1,65 @@
 {
-	"name": "initd",
-	"image": "ghcr.io/georglauterbach/dev-container-base:5.4.0",
-	"features": {
-		"ghcr.io/georglauterbach/dev-container-features/rust:5.10.0": {
+  "name": "sysinitd",
+  "image": "docker.io/ubuntu:25.04",
+  "features": {
+    "ghcr.io/georglauterbach/dev-container-features/cache-vscode-extensions:0.3": {},
+    "ghcr.io/georglauterbach/dev-container-features/hermes:0.2": {},
+    "ghcr.io/georglauterbach/dev-container-features/bash:0.3": {},
+    "ghcr.io/georglauterbach/dev-container-features/rust:6.5": {
       "rust.rustup.default-toolchain-file": "rust-toolchain.toml",
-			"system.packages.additional-packages": "pkg-config,musl-tools",
-			"linker.mold.install": "true"
-		}
-	},
-	"updateRemoteUserUID": true,
-	"containerEnv": {
-		// General
-		"REPOSITORY_ROOT_DIR": "${containerWorkspaceFolder}",
-		// Rust
-		"CARGO_TARGET_DIR": "${containerWorkspaceFolder}/target",
-		"CARGO_HOME": "${containerWorkspaceFolder}/.rust/cargo/home",
-		"RUSTUP_HOME": "${containerWorkspaceFolder}/.rust/rustup",
-		"CARGO_TARGET_AARCH64_UNKNOWN_LINUX_MUSL_LINKER": "aarch64-linux-gnu-gcc",
-		"CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER": "x86_64-linux-musl-gcc"
-	},
-	"remoteEnv": {
-		"PATH": "${containerEnv:CARGO_HOME}/bin:${containerEnv:PATH}"
-	},
-	"initializeCommand": "mkdir -p \"${HOME}/.gnupg\" \"${HOME}/.ssh\"",
-	"postStartCommand": "[ ! -f \"${REPOSITORY_ROOT_DIR}/.vscode/post_start_command.sh\" ] || bash \"${REPOSITORY_ROOT_DIR}/.vscode/post_start_command.sh\"",
-	"mounts": [
-    "type=volume,consistency=cached,source=github.georglauterbach.computer.cache,target=/home/ubuntu/.cache",
-    "type=bind,source=${localEnv:HOME}/.ssh,target=/home/ubuntu/.ssh,readonly",
-    "type=bind,source=${localEnv:HOME}/.gnupg,target=/home/ubuntu/.gnupg"
-	],
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"aaron-bond.better-comments",
-				"asciidoctor.asciidoctor-vscode",
-        "bierner.github-markdown-preview",
-        "github.vscode-github-actions",
-				"redhat.vscode-yaml",
-        "streetsidesoftware.code-spell-checker",
-        "yzhang.markdown-all-in-one"
-			],
-			"settings": {
-				// * basics
-				"files.watcherExclude": {
-					"**/.git/objects/**": true,
-					".rust/**": true
-				},
-				"files.exclude": {
-					"**/.git": true,
-					".rust": true
-				},
-				// * extensions::asciidoctor.asciidoctor-vscode
-				"asciidoc.antora.showEnableAntoraPrompt": false
-			}
-		}
-	}
+      "system.packages.additional-packages": "pkg-config,musl-tools",
+      "linker.mold.install": "true"
+    }
+  },
+  "containerUser": "ubuntu",
+  "remoteUser": "ubuntu",
+  "updateRemoteUserUID": true,
+  "containerEnv": {
+    // General
+    "USER": "ubuntu",
+    "HOME": "/home/ubuntu",
+    "REPOSITORY_ROOT_DIR": "${containerWorkspaceFolder}",
+    // Rust
+    "CARGO_TARGET_DIR": "${containerWorkspaceFolder}/target",
+    "CARGO_HOME": "/usr/rust/persistence/cargo/home",
+    "RUSTUP_HOME": "/usr/rust/persistence/rustup/home",
+    "CARGO_TARGET_AARCH64_UNKNOWN_LINUX_MUSL_LINKER": "aarch64-linux-gnu-gcc",
+    "CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER": "x86_64-linux-musl-gcc"
+  },
+  "remoteEnv": {
+    "PATH": "${containerEnv:CARGO_HOME}/bin:${containerEnv:PATH}"
+  },
+  "initializeCommand": "mkdir --parents \"${HOME}/.gnupg\" \"${HOME}/.ssh\"",
+  "postCreateCommand": "sudo chown --recursive ubuntu:ubuntu /usr/rust/persistence ${containerEnv:HOME}/.cache",
+  "postStartCommand": "bash \"${containerWorkspaceFolder}/.vscode/post_start_command.sh\" || :",
+  "mounts": [
+    {
+      "type": "volume",
+      "source": "com.github.georglauterbach.sysinitd.home_cache",
+      "target": "/home/ubuntu/.cache"
+    },
+    {
+      "type": "volume",
+      "source": "com.github.georglauterbach.sysinitd.rust_toolchain_persistence",
+      "target": "/usr/rust/persistence"
+    },
+    {
+      "type": "bind",
+      "source": "${localEnv:HOME}/.ssh",
+      "target": "/home/ubuntu/.ssh,readonly"
+    },
+    {
+      "type": "bind",
+      "source": "${localEnv:HOME}/.gnupg",
+      "target": "/home/ubuntu/.gnupg"
+    }
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "aaron-bond.better-comments",
+        "streetsidesoftware.code-spell-checker"
+      ]
+    }
+  }
 }
