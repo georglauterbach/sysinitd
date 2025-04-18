@@ -1,21 +1,39 @@
 meta:
   version: 0.1.0
 
-type: temporary | permanent
+id: <ID>
 
-program:
-  name: <NAME>
-  arguments: [ <ARGUMENTS> ]
+start:
+  command: ls
+  arguments: []
+  user: ubuntu
 
-  shutdown_command: <SHUTDOWN COMMAND>
+  after: []
+  delay: 2s
 
-  environment:
-    - name: <ENVIRONMENT VARIABLE NAME>
-      value: <ENVIRONMENT VARIABLE VALUE>
+restart:
+  strategy: never
+  attempts: 0
+
+termination:
+  command:
+  arguments: []
+
+  before: []
+  delay: 2s
+
+environment:
+  clear: true
+  variables: {}
+
+log:
+  stdin: /dev/null
+  stdout: /dev/stdout
+  stderr: /dev/stderr
 
 diagnosis:
-  level5:
-  level4:
-  level3:
-  level2:
-  level1:
+  level5: ''
+  level4: ''
+  level3: ''
+  level2: ''
+  level1: ''

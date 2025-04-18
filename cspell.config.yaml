@@ -10,5 +10,6 @@ dictionaries:
 words: []
 
 ignoreWords:
+  - humantime
   - rustdoc
   - sysinitd
