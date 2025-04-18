@@ -1,8 +1,4 @@
-# `initd`
-
-[//]: # (cSpell: locale en)
-[//]: # (cSpell: enableCompoundWords)
-[//]: # (cSpell: ignore initd)
+# `sysinitd`
 
 [![ci::status]][ci::github] [![documentation::badge]][documentation::web]
 
