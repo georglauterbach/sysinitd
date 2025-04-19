@@ -1,11 +1,11 @@
 meta:
   version: 0.1.0
 
-id: test
+id: lol
 
 start:
   command: sh
-  arguments: [-c, "sleep 2 ; exit 5 ;"]
+  arguments: [-c, "sleep 1 ; exit 4 ;"]
   user: ubuntu
 
   after: []

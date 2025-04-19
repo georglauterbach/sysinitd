@@ -1,9 +1,8 @@
 //! TODO
 
-use ::std::fmt::write;
+mod serialize;
 
-use ::anyhow::Context;
-use ::serde::Deserialize;
+use ::anyhow::Context as _;
 
 /// TODO
 #[derive(Debug, ::clap::Parser)]
@@ -16,50 +15,10 @@ struct Arguments {
     services_directories: Vec<::std::path::PathBuf>,
 }
 
-#[derive(Debug, ::serde::Deserialize, ::serde::Serialize)]
-struct Meta {
-    version: String,
-}
-
-fn deserialize_option_humantime<'de, D>(deserializer: D) -> Result<Option<std::time::Duration>, D::Error>
-where
-    D: ::serde::Deserializer<'de>,
-{
-    let deserialized_string = String::deserialize(deserializer)?;
-    match ::humantime::parse_duration(&deserialized_string) {
-      Ok(duration) => Ok(Some(duration)),
-      Err(error) => Err(::serde::de::Error::custom(error))
-    }
-}
-
-#[derive(Debug, ::serde::Deserialize, ::serde::Serialize)]
-struct Start {
-    command: String,
-    arguments: Vec<String>,
-    user: String,
-    after: Option<Vec<String>>,
-    #[serde(skip_serializing_if = "Option::is_none", deserialize_with = "deserialize_option_humantime")]
-    delay: Option<std::time::Duration>,
-}
-
-#[derive(Debug, ::serde::Deserialize, ::serde::Serialize)]
-struct Service {
-    meta: Meta,
-    id: String,
-    start: Start,
-}
-
-impl std::fmt::Display for Service {
-  fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-      write!(f, "Service: {{
-{}}}", ::serde_yml::to_string(self).unwrap())
-  }
-}
-
 #[::tokio::main(flavor = "multi_thread")]
 async fn main() {
     /// TODO
-    fn actual_main() -> ::anyhow::Result<()> {
+    async fn actual_main() -> ::anyhow::Result<()> {
         let arguments =
             <Arguments as ::clap::Parser>::try_parse().context("Could not parse arguments")?;
 
@@ -67,6 +26,8 @@ async fn main() {
             .with_max_level(arguments.verbosity)
             .with_target(false)
             .init();
+
+        let mut services = tokio::task::JoinSet::new();
 
         for directory in &arguments.services_directories {
             let canonical_dir = directory.canonicalize().unwrap();
@@ -95,17 +56,29 @@ async fn main() {
                     "Could not parse contents of file {path:?} into valid UTF-8"
                 ))?;
 
-                let service: Service = ::serde_yml::from_str(&file_content).unwrap();
-                tracing::info!("{service}")
+                let service: serialize::Service = ::serde_yml::from_str(&file_content).unwrap();
+                services.spawn(service.run());
             }
-
-            // for file in directory.fi
         }
 
-        Ok(())
+        let mut final_result = Ok(());
+        for result in services.join_all().await {
+            if let Err(error) = result {
+                if final_result.is_ok() {
+                    final_result = Err(anyhow::Error::new(error));
+                } else {
+                    final_result = final_result.context(error);
+                }
+            }
+        }
+        if let Err(error) = final_result {
+          final_result = Err(error.context("BIG FAILURE!"));
+        }
+
+        final_result
     }
 
-    if let Err(error) = actual_main() {
+    if let Err(error) = actual_main().await {
         ::tracing::error!("{error:?}");
         std::process::exit(1);
     }

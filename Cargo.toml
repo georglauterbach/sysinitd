@@ -29,10 +29,15 @@ serde = { version = "1.0", default-features = false, features = [
 ] }
 serde_yml = { version = "=0.0.12", default-features = false }
 
+thiserror = { version = "2.0", default-features = false, features = ["std"] }
+
 tokio = { version = "1.44", default-features = false, features = [
   "macros",
   "rt-multi-thread",
   "tracing",
+  "sync",
+  "process",
+  "time",
 ] }
 
 tracing = { version = "0.1", default-features = false }

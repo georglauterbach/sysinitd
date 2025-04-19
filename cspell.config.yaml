@@ -13,3 +13,4 @@ ignoreWords:
   - humantime
   - rustdoc
   - sysinitd
+  - thiserror
