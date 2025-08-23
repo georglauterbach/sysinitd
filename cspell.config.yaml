@@ -12,5 +12,6 @@ words: []
 ignoreWords:
   - humantime
   - rustdoc
+  - serde
   - sysinitd
   - thiserror

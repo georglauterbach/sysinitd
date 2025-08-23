@@ -6,45 +6,55 @@ edition = "2024"
 description = "A supervisor daemon and initialization process for Linux"
 
 [dependencies]
-anyhow = { version = "1.0", default-features = false }
-
+# ----  Argument Parsing  -----------------------
 clap = { version = "4.5", default-features = false, features = [
-  "error-context",
-  "help",
-  "std",
-  "suggestions",
-  "usage",
-  "env",
-  "cargo",
+    "error-context",
+    "help",
+    "std",
+    "suggestions",
+    "usage",
+    "env",
+    "cargo",
 ] }
 clap-verbosity-flag = { version = "3.0", default-features = false, features = [
-  "tracing",
+    "tracing",
 ] }
 clap_autocomplete = { version = "0.4", default-features = false }
-humantime = "2.2.0"
 
+# ----  Async Runtime  --------------------------
+tokio = { version = "1.44", default-features = false, features = [
+    "macros",
+    "rt-multi-thread",
+    "tracing",
+    "sync",
+    "process",
+    "time",
+] }
+
+# ----  Error Handling  -------------------------
+anyhow = { version = "1.0", default-features = false }
+thiserror = { version = "2.0", default-features = false, features = ["std"] }
+
+# ----  Service Definition  ---------------------
+humantime = "2.2.0"
+semver = { version = "1.0", default-features = false, features = ["serde"] }
 serde = { version = "1.0", default-features = false, features = [
-  "std",
-  "derive",
+    "std",
+    "derive",
 ] }
 serde_yml = { version = "=0.0.12", default-features = false }
 
-thiserror = { version = "2.0", default-features = false, features = ["std"] }
-
-tokio = { version = "1.44", default-features = false, features = [
-  "macros",
-  "rt-multi-thread",
-  "tracing",
-  "sync",
-  "process",
-  "time",
+petgraph = { version = "0.8", default-features = false, features = [
+    "std",
+    "stable_graph",
 ] }
 
+# ----  Tracing  --------------------------------
 tracing = { version = "0.1", default-features = false }
 tracing-subscriber = { version = "0.3", default-features = false, features = [
-  "ansi",
-  "fmt",
-  "smallvec",
-  "std",
-  "tracing-log",
+    "ansi",
+    "fmt",
+    "smallvec",
+    "std",
+    "tracing-log",
 ] }

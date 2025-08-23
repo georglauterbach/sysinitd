@@ -1,48 +1,9 @@
 meta:
   version: 0.1.0
 
-id: lol
+id: uff
 
 start:
   command: sh
   arguments: [-c, "sleep 1 ; exit 4 ;"]
   user: ubuntu
-
-  after: []
-  delay: 2s
-
-restart:
-  # command: ls
-  # arguments: []
-
-  # TODO if: command_failed
-  strategy: never
-  attempts: 0
-
-termination:
-  # command: ls
-  # arguments: []
-
-  signal: KILL
-
-  before: []
-  delay: 2s
-
-environment:
-  clear: true
-  variables:
-    TEST_VAR: TEST_VAL
-
-log:
-  stdin: /dev/null
-  stdout: /dev/stdout
-  stderr: /dev/stderr
-
-diagnosis:
-  level5:
-    command: ps
-    arguments: [aux]
-  # level4:
-  # level3:
-  # level2:
-  # level1:

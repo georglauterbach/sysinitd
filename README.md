@@ -4,9 +4,9 @@
 
 >[!WARNING]
 >
-> This software is currently in development.
+> This software is currently under active development.
 
-`initd` is a supervisor daemon and initialization process for Linux that uses YAML configuration files to fully define the process landscape it supervises. [The documentation][documentation::web] is written entirely via [rustdoc][rustdoc::documentation] and hence bound to the source code.
+`sysinitd` is a supervisor daemon and initialization process for Linux that uses YAML configuration files to fully define the process landscape it supervises. [The documentation][documentation::web] is written entirely via [rustdoc][rustdoc::documentation] and hence bound to the source code.
 
 [//]: # (Links)
 

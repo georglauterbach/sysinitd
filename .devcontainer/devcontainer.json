@@ -3,8 +3,8 @@
   "image": "docker.io/ubuntu:25.04",
   "features": {
     "ghcr.io/georglauterbach/dev-container-features/cache-vscode-extensions:0.3": {},
-    "ghcr.io/georglauterbach/dev-container-features/hermes:0.2": {},
-    "ghcr.io/georglauterbach/dev-container-features/rust:6.5": {
+    "ghcr.io/georglauterbach/dev-container-features/hermes:0.5": {},
+    "ghcr.io/georglauterbach/dev-container-features/rust:8.0": {
       "rust.rustup.default-toolchain-file": "rust-toolchain.toml",
       "system.packages.additional-packages": "pkg-config,musl-tools",
       "linker.mold.install": "true"
@@ -19,17 +19,16 @@
     "HOME": "/home/ubuntu",
     "REPOSITORY_ROOT_DIR": "${containerWorkspaceFolder}",
     // Rust
+    "RUSTUP_HOME": "${containerWorkspaceFolder}/.rust/cargo/home",
+    "CARGO_HOME": "${containerWorkspaceFolder}/.rust/rustup/home",
     "CARGO_TARGET_DIR": "${containerWorkspaceFolder}/target",
-    "CARGO_HOME": "/usr/rust/persistence/cargo/home",
-    "RUSTUP_HOME": "/usr/rust/persistence/rustup/home",
     "CARGO_TARGET_AARCH64_UNKNOWN_LINUX_MUSL_LINKER": "aarch64-linux-gnu-gcc",
     "CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER": "x86_64-linux-musl-gcc"
   },
   "remoteEnv": {
     "PATH": "${containerEnv:CARGO_HOME}/bin:${containerEnv:PATH}"
   },
-  "initializeCommand": "mkdir --parents \"${HOME}/.gnupg\" \"${HOME}/.ssh\"",
-  "postCreateCommand": "sudo chown --recursive ubuntu:ubuntu /usr/rust/persistence ${containerEnv:HOME}/.cache",
+  "postCreateCommand": "sudo chown --recursive ubuntu:ubuntu ${containerEnv:HOME}/.cache",
   "postStartCommand": "bash \"${containerWorkspaceFolder}/.vscode/post_start_command.sh\" || :",
   "mounts": [
     {
@@ -39,18 +38,8 @@
     },
     {
       "type": "volume",
-      "source": "com.github.georglauterbach.sysinitd.rust_toolchain_persistence",
-      "target": "/usr/rust/persistence"
-    },
-    {
-      "type": "bind",
-      "source": "${localEnv:HOME}/.ssh",
-      "target": "/home/ubuntu/.ssh,readonly"
-    },
-    {
-      "type": "bind",
-      "source": "${localEnv:HOME}/.gnupg",
-      "target": "/home/ubuntu/.gnupg"
+      "source": "com.github.georglauterbach.sysinitd.rust.tooling",
+      "target": "/usr/local/share/rust"
     }
   ],
   "customizations": {

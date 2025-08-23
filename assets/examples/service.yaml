@@ -8,41 +8,41 @@ start:
   arguments: [-c, "sleep 2 ; exit 5 ;"]
   user: ubuntu
 
-  after: []
-  delay: 2s
+#   after: []
+#   delay: 2s
 
-restart:
-  # command: ls
-  # arguments: []
+# restart:
+#   # command: ls
+#   # arguments: []
 
-  # TODO if: command_failed
-  strategy: never
-  attempts: 0
+#   # TODO if: command_failed
+#   strategy: never
+#   attempts: 0
 
-termination:
-  # command: ls
-  # arguments: []
+# termination:
+#   # command: ls
+#   # arguments: []
 
-  signal: KILL
+#   signal: KILL
 
-  before: []
-  delay: 2s
+#   before: []
+#   delay: 2s
 
-environment:
-  clear: true
-  variables:
-    TEST_VAR: TEST_VAL
+# environment:
+#   clear: true
+#   variables:
+#     TEST_VAR: TEST_VAL
 
-log:
-  stdin: /dev/null
-  stdout: /dev/stdout
-  stderr: /dev/stderr
+# log:
+#   stdin: /dev/null
+#   stdout: /dev/stdout
+#   stderr: /dev/stderr
 
-diagnosis:
-  level5:
-    command: ps
-    arguments: [aux]
-  # level4:
-  # level3:
-  # level2:
-  # level1:
+# diagnosis:
+#   level5:
+#     command: ps
+#     arguments: [aux]
+#   # level4:
+#   # level3:
+#   # level2:
+#   # level1:
