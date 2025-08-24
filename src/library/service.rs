@@ -29,6 +29,11 @@ impl Service {
     }
 
     /// TODO
+    pub fn start(&self) -> &Start {
+        &self.start
+    }
+
+    /// TODO
     pub fn serde_from_slice(slice: &Vec<u8>, path: &std::path::Path) -> ::anyhow::Result<Self> {
         use ::anyhow::Context as _;
 
@@ -49,10 +54,12 @@ struct Meta {
 
 /// TODO
 #[derive(Debug, ::serde::Deserialize)]
-struct Start {
+pub struct Start {
     /// TODO
     #[serde(flatten)]
     _command_and_arguments: BasicCommand,
+    /// TODO
+    pub dependencies: Option<Vec<String>>,
 }
 
 /// TODO
@@ -62,8 +69,6 @@ struct BasicCommand {
     command: String,
     /// TODO
     arguments: Option<Vec<String>>,
-    /// TODO
-    user: String,
 }
 
 mod deserialize {

@@ -1,0 +1,9 @@
+---
+meta:
+  version: 0.1.0
+
+id: service-a
+
+start:
+  command: _
+  arguments: []

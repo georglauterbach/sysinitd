@@ -1,9 +1,0 @@
-meta:
-  version: 0.1.0
-
-id: lol
-
-start:
-  command: sh
-  arguments: [-c, "sleep 2 ; exit 3 ;"]
-  user: ubuntu

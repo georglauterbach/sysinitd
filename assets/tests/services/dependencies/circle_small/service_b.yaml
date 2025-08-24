@@ -1,0 +1,10 @@
+---
+meta:
+  version: 0.1.0
+
+id: service-b
+
+start:
+  command: _
+  arguments: []
+  dependencies: [service-c]

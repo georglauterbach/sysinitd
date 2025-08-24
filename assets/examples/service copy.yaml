@@ -1,9 +1,0 @@
-meta:
-  version: 0.1.0
-
-id: uff
-
-start:
-  command: sh
-  arguments: [-c, "sleep 1 ; exit 4 ;"]
-  user: ubuntu

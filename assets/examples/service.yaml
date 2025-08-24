@@ -4,11 +4,10 @@ meta:
 id: test
 
 start:
-  command: sh
-  arguments: [-c, "sleep 2 ; exit 5 ;"]
-  user: ubuntu
+  command: id
+  arguments: [-u]
+  dependencies: []
 
-#   after: []
 #   delay: 2s
 
 # restart:

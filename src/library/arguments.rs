@@ -23,6 +23,14 @@ impl Arguments {
     pub fn services_directories(&self) -> &[::std::path::PathBuf] {
         &self.service_directories
     }
+
+    #[cfg(test)]
+    pub fn new_test(service_directories: Vec<::std::path::PathBuf>) -> Self {
+        Self {
+            verbosity: ::clap_verbosity_flag::Verbosity::new(2, 0),
+            service_directories,
+        }
+    }
 }
 
 #[cfg(test)]
@@ -33,31 +41,31 @@ mod tests {
 
     #[test]
     fn parse_log_level() {
-        let arguments = <Arguments as ::clap::Parser>::try_parse_from(["sysinitd", "-vv"])
+        let arguments = <Arguments as ::clap::Parser>::try_parse_from(["sysinitd", "-vv", "/"])
             .expect("could not parse log-level (-vv) arguments");
         assert_eq!(
             arguments.log_level_filter(),
             ::tracing_subscriber::filter::LevelFilter::TRACE
         );
-        let arguments = <Arguments as ::clap::Parser>::try_parse_from(["sysinitd", "-v"])
+        let arguments = <Arguments as ::clap::Parser>::try_parse_from(["sysinitd", "-v", "/"])
             .expect("could not parse log-level (-v) arguments");
         assert_eq!(
             arguments.log_level_filter(),
             ::tracing_subscriber::filter::LevelFilter::DEBUG
         );
-        let arguments = <Arguments as ::clap::Parser>::try_parse_from(["sysinitd", "-q"])
+        let arguments = <Arguments as ::clap::Parser>::try_parse_from(["sysinitd", "-q", "/"])
             .expect("could not parse log-level (-q) arguments");
         assert_eq!(
             arguments.log_level_filter(),
             ::tracing_subscriber::filter::LevelFilter::WARN
         );
-        let arguments = <Arguments as ::clap::Parser>::try_parse_from(["sysinitd", "-qq"])
+        let arguments = <Arguments as ::clap::Parser>::try_parse_from(["sysinitd", "-qq", "/"])
             .expect("could not parse log-level (-qq) arguments");
         assert_eq!(
             arguments.log_level_filter(),
             ::tracing_subscriber::filter::LevelFilter::ERROR
         );
-        let arguments = <Arguments as ::clap::Parser>::try_parse_from(["sysinitd", "-qqq"])
+        let arguments = <Arguments as ::clap::Parser>::try_parse_from(["sysinitd", "-qqq", "/"])
             .expect("could not parse log-level (-qqq) arguments");
         assert_eq!(
             arguments.log_level_filter(),
@@ -67,15 +75,12 @@ mod tests {
 
     #[test]
     fn test_services_directories() {
-        let arguments = <Arguments as ::clap::Parser>::try_parse_from(["sysinitd"])
-            .expect("could not parse basic arguments");
+        let arguments = <Arguments as ::clap::Parser>::try_parse_from(["sysinitd", "/tmp"])
+            .expect("could not parse single service-path argument");
         assert_eq!(
             arguments.log_level_filter(),
             ::tracing_subscriber::filter::LevelFilter::INFO
         );
-
-        let arguments = <Arguments as ::clap::Parser>::try_parse_from(["sysinitd", "/tmp"])
-            .expect("could not parse single service-path argument");
         assert_eq!(
             arguments.services_directories(),
             &[::std::path::PathBuf::from_str("/tmp").unwrap()]
